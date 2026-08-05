@@ -14,10 +14,10 @@ import {
 } from 'lucide-react';
 import { Grievance } from '../mockData';
 
-const FILTER_OPTIONS = {
-  category: ['Inputs', 'Schemes', 'Payments', 'Credit', 'Markets'],
-  status: ['Submitted', 'Assigned', 'In Progress', 'More Info Needed', 'Pending Submitter', 'Resolved', 'Closed'],
-  priority: ['Critical', 'High', 'Medium', 'Low'],
+export const FILTER_OPTIONS = {
+  category: ['Input', 'Schemes', 'Payments', 'Markets', 'Infrastructure', 'Other'],
+  status: ['Assigned', 'Submitted', 'Pending Submit', 'In Progress', 'More Info Needed', 'Resolved', 'Rejected', 'Under Review'],
+  priority: ['Low', 'Medium', 'High', 'Critical'],
 };
 
 const statusColors: Record<string, string> = {
@@ -48,14 +48,11 @@ export function GrievanceTable({
   totalItems,
   totalPages,
   paginatedGrievances,
-  onOpenAdvancedFilters
+  onOpenAdvancedFilters,
+  selectedFilters,
+  setSelectedFilters
 }: any) {
   const [openFilter, setOpenFilter] = React.useState<string | null>(null);
-  const [selectedFilters, setSelectedFilters] = React.useState({
-    category: [...FILTER_OPTIONS.category],
-    status: [...FILTER_OPTIONS.status],
-    priority: [...FILTER_OPTIONS.priority]
-  });
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -204,7 +201,7 @@ export function GrievanceTable({
                       We couldn't find any grievances matching your criteria right now. Try adjusting your filters or search query.
                     </p>
                     <button
-                      onClick={() => { setSearchTerm(''); setSelectedFilters({ category: [], status: [], priority: [] }); setOpenFilter(null); }}
+                      onClick={() => { setSearchTerm(''); setSelectedFilters({ category: [...FILTER_OPTIONS.category], status: [...FILTER_OPTIONS.status], priority: [...FILTER_OPTIONS.priority] }); setOpenFilter(null); }}
                       className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-all hover:shadow-sm"
                     >
                       <X className="h-4 w-4" />
@@ -219,87 +216,94 @@ export function GrievanceTable({
       </div>
 
       {/* Pagination Footer */}
-      <div className="flex flex-col md:flex-row justify-between items-center p-4 border-t border-gray-200 gap-4 bg-gray-50/30">
-        <div className="flex items-center gap-4 text-sm text-gray-600">
-          <div className="flex items-center gap-2">
-            <span>Rows per page:</span>
-            <select
-              className="border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 bg-white"
-              value={rowsPerPage}
-              onChange={(e) => {
-                setRowsPerPage(Number(e.target.value));
-                setCurrentPage(1);
-              }}
-            >
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-            </select>
-          </div>
-          <span>
-            Showing <span className="font-semibold text-gray-900">{totalItems === 0 ? 0 : (currentPage - 1) * rowsPerPage + 1}-{Math.min(currentPage * rowsPerPage, totalItems)}</span> of <span className="font-semibold text-gray-900">{totalItems}</span> results
-          </span>
-        </div>
-
-        <div className="flex items-center gap-1">
-          <PaginationButton
-            icon={<ChevronsLeft className="h-4 w-4" />}
-            onClick={() => handlePageChange(1)}
-            disabled={currentPage === 1}
-          />
-          <PaginationButton
-            icon={<ChevronLeft className="h-4 w-4" />}
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          />
-
-          <div className="flex items-center gap-1 px-3">
-            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-              let pageNum = currentPage - 2 + i;
-              if (currentPage <= 3) pageNum = i + 1;
-              else if (currentPage >= totalPages - 2) pageNum = totalPages - 4 + i;
-
-              if (pageNum > 0 && pageNum <= totalPages) {
-                return (
-                  <button
-                    key={pageNum}
-                    onClick={() => handlePageChange(pageNum)}
-                    className={`w-8 h-8 flex items-center justify-center rounded-md text-sm font-semibold transition-colors
-                      ${currentPage === pageNum
-                        ? 'bg-[#1E8E3E] text-white shadow-sm'
-                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'}`}
-                  >
-                    {pageNum}
-                  </button>
-                );
-              }
-              return null;
-            })}
-            {totalPages > 5 && currentPage < totalPages - 2 && (
-              <>
-                <span className="text-gray-400 px-1">...</span>
-                <button
-                  onClick={() => handlePageChange(totalPages)}
-                  className="w-8 h-8 flex items-center justify-center rounded-md text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-colors"
+      {totalItems > 0 && (
+        <div className="flex flex-col md:flex-row justify-between items-center p-4 border-t border-gray-200 gap-4 bg-gray-50/30">
+          <div className="flex items-center gap-4 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <span className="text-gray-500 font-medium">Rows per page:</span>
+              <div className="relative group">
+                <select
+                  className="appearance-none bg-white border border-gray-300 rounded-lg pl-3 pr-8 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#1E8E3E]/20 focus:border-[#1E8E3E] hover:border-[#1E8E3E] transition-all duration-300 cursor-pointer shadow-sm group-hover:shadow text-gray-700 font-medium"
+                  value={rowsPerPage}
+                  onChange={(e) => {
+                    setRowsPerPage(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
                 >
-                  {totalPages}
-                </button>
-              </>
-            )}
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={50}>50</option>
+                </select>
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-hover:text-[#1E8E3E] transition-colors duration-300">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+              </div>
+            </div>
+            <span>
+              Showing <span className="font-semibold text-gray-900">{totalItems === 0 ? 0 : (currentPage - 1) * rowsPerPage + 1}-{Math.min(currentPage * rowsPerPage, totalItems)}</span> of <span className="font-semibold text-gray-900">{totalItems}</span> results
+            </span>
           </div>
 
-          <PaginationButton
-            icon={<ChevronRight className="h-4 w-4" />}
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages || totalPages === 0}
-          />
-          <PaginationButton
-            icon={<ChevronsRight className="h-4 w-4" />}
-            onClick={() => handlePageChange(totalPages)}
-            disabled={currentPage === totalPages || totalPages === 0}
-          />
+          <div className="flex items-center gap-1">
+            <PaginationButton
+              icon={<ChevronsLeft className="h-4 w-4" />}
+              onClick={() => handlePageChange(1)}
+              disabled={currentPage === 1}
+            />
+            <PaginationButton
+              icon={<ChevronLeft className="h-4 w-4" />}
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            />
+
+            <div className="flex items-center gap-1 px-3">
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum = currentPage - 2 + i;
+                if (currentPage <= 3) pageNum = i + 1;
+                else if (currentPage >= totalPages - 2) pageNum = totalPages - 4 + i;
+
+                if (pageNum > 0 && pageNum <= totalPages) {
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-200
+                        ${currentPage === pageNum
+                          ? 'bg-[#1E8E3E] text-white shadow-md hover:bg-green-700 hover:shadow-lg hover:-translate-y-0.5'
+                          : 'text-gray-600 hover:bg-white hover:text-[#1E8E3E] hover:shadow-md hover:-translate-y-0.5 border border-transparent hover:border-gray-200'}`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                }
+                return null;
+              })}
+              {totalPages > 5 && currentPage < totalPages - 2 && (
+                <>
+                  <span className="text-gray-400 px-1">...</span>
+                  <button
+                    onClick={() => handlePageChange(totalPages)}
+                    className="w-8 h-8 flex items-center justify-center rounded-lg text-sm font-semibold text-gray-600 hover:bg-white hover:text-[#1E8E3E] hover:shadow-md hover:-translate-y-0.5 border border-transparent hover:border-gray-200 transition-all duration-200"
+                  >
+                    {totalPages}
+                  </button>
+                </>
+              )}
+            </div>
+
+            <PaginationButton
+              icon={<ChevronRight className="h-4 w-4" />}
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages || totalPages === 0}
+            />
+            <PaginationButton
+              icon={<ChevronsRight className="h-4 w-4" />}
+              onClick={() => handlePageChange(totalPages)}
+              disabled={currentPage === totalPages || totalPages === 0}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -309,8 +313,10 @@ function PaginationButton({ icon, onClick, disabled }: { icon: React.ReactNode; 
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`p-1.5 rounded-md flex items-center justify-center transition-colors
-        ${disabled ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900'}`}
+      className={`p-1.5 rounded-lg flex items-center justify-center transition-all duration-200
+        ${disabled 
+          ? 'text-gray-300 cursor-not-allowed bg-transparent' 
+          : 'text-gray-500 hover:bg-white hover:text-[#1E8E3E] hover:shadow-md hover:-translate-y-0.5 border border-transparent hover:border-gray-200'}`}
     >
       {icon}
     </button>
@@ -333,7 +339,7 @@ function AnimatedCheckbox({ checked, onChange, label }: { checked: boolean, onCh
           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
         </svg>
       </div>
-      <span className="text-[14px] text-gray-700 font-normal whitespace-nowrap">{label}</span>
+      <span className="text-[14px] text-gray-700 font-medium whitespace-nowrap">{label}</span>
     </label>
   );
 }
@@ -391,7 +397,7 @@ function FilterPopup({
     <div
       ref={popupRef}
       onClick={(e) => e.stopPropagation()}
-      className="absolute z-10 mt-2 w-max pr-6 min-w-[160px] bg-white border border-gray-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] rounded-lg flex flex-col font-normal top-full left-6 overflow-hidden"
+      className="absolute z-10 mt-2 w-max pr-0 min-w-[160px] bg-white border border-gray-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] rounded-lg flex flex-col font-normal top-full left-6 overflow-hidden"
     >
       <div className="flex flex-col divide-y divide-gray-100">
         <AnimatedCheckbox

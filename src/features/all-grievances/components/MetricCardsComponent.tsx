@@ -17,7 +17,7 @@ export function MetricCardsComponent({ metrics }: { metrics: Record<string, numb
 function MetricCard({ title, count, icon, bgColor }: { title: string; count: number; icon: React.ReactNode; bgColor: string }) {
   return (
     <div className="bg-white p-4 shadow-sm flex flex-col justify-between cursor-default border border-[#F1F3F4] shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05),0px_2px_4px_-1px_rgba(0,0,0,0.03)] hover:-translate-y-1 hover:shadow-lg transition-all duration-300 rounded-xl group">
-      <div className="text-sm font-semibold text-gray-500">{title}</div>
+      <div className="text-md font-semibold text-gray-500">{title}</div>
       <div className="flex items-end justify-between">
         <span className="text-[28px] leading-none font-bold text-gray-900">{count}</span>
         <div className={`p-3.5 rounded-2xl ${bgColor} flex items-center justify-center transition-transform duration-300 group-hover:scale-105`}>

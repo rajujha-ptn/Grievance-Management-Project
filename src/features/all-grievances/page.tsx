@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { mockGrievances } from './mockData';
 import { TopHeader } from './components/TopHeader';
 import { MetricCardsComponent } from './components/MetricCardsComponent';
-import { GrievanceTable } from './components/GrievanceTable';
+import { GrievanceTable, FILTER_OPTIONS } from './components/GrievanceTable';
 import { AdvancedFiltersSidebar } from './components/AdvancedFiltersSidebar';
 
 export default function AllGrievancesPage() {
@@ -19,6 +19,12 @@ export default function AllGrievancesPage() {
     priority: [] as string[],
     regions: [] as string[],
     dateRange: null as string | null
+  });
+
+  const [tableFilters, setTableFilters] = useState({
+    category: [...FILTER_OPTIONS.category],
+    status: [...FILTER_OPTIONS.status],
+    priority: [...FILTER_OPTIONS.priority]
   });
 
   // Filtering
@@ -57,9 +63,14 @@ export default function AllGrievancesPage() {
         }
       }
       
-      return matchesSearch && matchesStatus && matchesCategory && matchesPriority && matchesRegion && matchesDate;
+      // 4. Table filters match
+      const matchesTableCategory = tableFilters.category.length === FILTER_OPTIONS.category.length || tableFilters.category.includes(g.category) || tableFilters.category.includes(g.type as any);
+      const matchesTableStatus = tableFilters.status.length === FILTER_OPTIONS.status.length || tableFilters.status.includes(g.status);
+      const matchesTablePriority = tableFilters.priority.length === FILTER_OPTIONS.priority.length || tableFilters.priority.includes(g.priority);
+
+      return matchesSearch && matchesStatus && matchesCategory && matchesPriority && matchesRegion && matchesDate && matchesTableCategory && matchesTableStatus && matchesTablePriority;
     });
-  }, [searchTerm, advancedFilters]);
+  }, [searchTerm, advancedFilters, tableFilters]);
 
   // Pagination
   const totalItems = filteredGrievances.length;
@@ -97,6 +108,8 @@ export default function AllGrievancesPage() {
         totalPages={totalPages}
         paginatedGrievances={paginatedGrievances}
         onOpenAdvancedFilters={() => setIsAdvancedFiltersOpen(true)}
+        selectedFilters={tableFilters}
+        setSelectedFilters={setTableFilters}
       />
 
       <AdvancedFiltersSidebar 
