@@ -16,13 +16,13 @@ export function CommentsAndCommunication() {
 
   return (
     <>
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col h-[500px]">
-        <div className="flex items-center gap-3 p-6 border-b border-gray-200 shrink-0">
+      <div className="bg-white rounded-xl border border-[#F1F3F4] shadow-sm flex flex-col min-h-[832px]">
+        <div className="flex items-center gap-3 px-6 py-3 border-b border-gray-200 shrink-0">
           <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
             <MessageCircle className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-900">Comments & Communication</h3>
+            <h3 className="text-lg font-bold text-gray-900 inline-block">Comments & Communication</h3>
             <p className="text-sm text-gray-500">3 messages in this thread</p>
           </div>
         </div>

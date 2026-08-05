@@ -54,7 +54,7 @@ export function DeferSLAPopup({ onClose }: DeferSLAPopupProps) {
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <CalendarClock className="h-5 w-5 text-indigo-600" />
-              <h2 className="text-xl font-bold text-gray-900">Defer SLA</h2>
+              <h2 className="text-md font-bold text-gray-900">Defer SLA</h2>
             </div>
             <p className="text-sm text-gray-500">Requires approval from a Senior Nodal Officer (L2)</p>
           </div>
