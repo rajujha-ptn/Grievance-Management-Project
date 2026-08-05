@@ -6,9 +6,12 @@ import { TopHeader } from './components/TopHeader';
 import { MetricCardsComponent } from './components/MetricCardsComponent';
 import { GrievanceTable, FILTER_OPTIONS } from './components/GrievanceTable';
 import { AdvancedFiltersSidebar } from './components/AdvancedFiltersSidebar';
+import { GrievanceDetailSidebar } from './detail-sidebar-panel/page';
+import { Grievance } from './mockData';
 
 export default function AllGrievancesPage() {
   const [isAdvancedFiltersOpen, setIsAdvancedFiltersOpen] = useState(false);
+  const [selectedGrievance, setSelectedGrievance] = useState<Grievance | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -110,6 +113,7 @@ export default function AllGrievancesPage() {
         onOpenAdvancedFilters={() => setIsAdvancedFiltersOpen(true)}
         selectedFilters={tableFilters}
         setSelectedFilters={setTableFilters}
+        onViewGrievance={setSelectedGrievance}
       />
 
       <AdvancedFiltersSidebar 
@@ -117,6 +121,11 @@ export default function AllGrievancesPage() {
         onClose={() => setIsAdvancedFiltersOpen(false)} 
         filters={advancedFilters}
         setFilters={setAdvancedFilters}
+      />
+
+      <GrievanceDetailSidebar
+        grievance={selectedGrievance}
+        onClose={() => setSelectedGrievance(null)}
       />
     </div>
   );

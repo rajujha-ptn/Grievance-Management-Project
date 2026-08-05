@@ -50,7 +50,8 @@ export function GrievanceTable({
   paginatedGrievances,
   onOpenAdvancedFilters,
   selectedFilters,
-  setSelectedFilters
+  setSelectedFilters,
+  onViewGrievance
 }: any) {
   const [openFilter, setOpenFilter] = React.useState<string | null>(null);
 
@@ -66,7 +67,7 @@ export function GrievanceTable({
       <div className="flex flex-col md:flex-row justify-between items-center p-4 border-b border-gray-200 gap-4">
         <div className="flex items-center gap-3">
           <h2 className="font-semibold text-gray-800 text-base">Grievance Records</h2>
-          <span className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">
+          <span className="text-xs text-gray-500 bg-gray-100 border border-gray-200 px-2.5 py-1 rounded-full">
             Showing {totalItems === 0 ? 0 : (currentPage - 1) * rowsPerPage + 1}-{Math.min(currentPage * rowsPerPage, totalItems)} of {totalItems}
           </span>
         </div>
@@ -176,7 +177,10 @@ export function GrievanceTable({
                     {grievance.submittedAt}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <button className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#E8F5E9] border border-green-300 text-[#1E8E3E] hover:bg-[#C8E6C9] rounded-full text-sm font-bold transition-colors opacity-90 group-hover:opacity-100">
+                    <button 
+                      onClick={() => onViewGrievance(grievance)}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#E6F3EA] border border-[#C9E5D2] text-green-600 hover:bg-[#C8E6C9] rounded-full text-sm font-bold transition-colors opacity-90 group-hover:opacity-100"
+                    >
                       <Eye className="h-4 w-4" />
                       View
                     </button>
@@ -314,8 +318,8 @@ function PaginationButton({ icon, onClick, disabled }: { icon: React.ReactNode; 
       onClick={onClick}
       disabled={disabled}
       className={`p-1.5 rounded-lg flex items-center justify-center transition-all duration-200
-        ${disabled 
-          ? 'text-gray-300 cursor-not-allowed bg-transparent' 
+        ${disabled
+          ? 'text-gray-300 cursor-not-allowed bg-transparent'
           : 'text-gray-500 hover:bg-white hover:text-[#1E8E3E] hover:shadow-md hover:-translate-y-0.5 border border-transparent hover:border-gray-200'}`}
     >
       {icon}
