@@ -61,7 +61,7 @@ export function Sidebar() {
                   href={item.href}
                   className={`flex items-center py-3 rounded-lg text-[15px] font-medium transition-all duration-200 ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-4 px-4'
                     } ${isActive
-                      ? "bg-[#0b8535] text-white shadow-sm"
+                      ? "bg-[#0b8535] text-white shadow-sm font-semibold"
                       : "text-[#a3cca8] hover:bg-[#144f33] hover:text-white"
                     }`}
                   title={isSidebarCollapsed ? item.name : undefined}

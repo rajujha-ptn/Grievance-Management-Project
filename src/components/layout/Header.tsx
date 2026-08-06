@@ -2,9 +2,23 @@
 
 import { Bell, Globe, Search, Menu, ChevronDown } from "lucide-react";
 import { useSidebar } from "@/contexts/SidebarContext";
+import { usePathname } from "next/navigation";
 
 export function Header() {
   const { toggleSidebar } = useSidebar();
+  const pathname = usePathname();
+
+  const routeTitles: Record<string, string> = {
+    "/": "Dashboard",
+    "/all-grievances": "All Grievances",
+    "/grievances/submit": "Submit Grievance",
+    "/analytics": "Analytics & Reporting",
+    "/users": "User Management",
+    "/admin": "Administration",
+    "/settings": "Settings",
+  };
+
+  const title = routeTitles[pathname] || "Dashboard";
 
   return (
     <header className="h-16 bg-white shadow-md flex items-center justify-between px-6 sticky top-0 z-10 w-full">
@@ -17,7 +31,7 @@ export function Header() {
         >
           <Menu className="w-6 h-6 stroke-[2.5]" />
         </button>
-        <h2 className="text-[22px] font-bold text-[#1e293b] tracking-tight">Dashboard</h2>
+        <h2 className="text-[22px] font-bold text-[#1e293b] tracking-tight">{title}</h2>
       </div>
 
       {/* Right Section */}
