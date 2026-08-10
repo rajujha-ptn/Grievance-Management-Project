@@ -53,12 +53,29 @@ const AnimatedSelect = ({ options, value, onChange, placeholder }: any) => {
   );
 };
 
-interface AddUserModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  initials: string;
+  initialsBg: string;
+  initialsColor: string;
+  role: string;
+  roleColor: string;
+  roleBg: string;
+  roleBorder: string;
+  region: string;
+  casesHandled: number;
+  status: string;
 }
 
-export function AddUserModal({ isOpen, onClose }: AddUserModalProps) {
+interface EditRoleModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  user: User | null;
+}
+
+export function EditRoleModal({ isOpen, onClose, user }: EditRoleModalProps) {
   const [role, setRole] = useState('');
   const [status, setStatus] = useState('Active');
   const [fullName, setFullName] = useState('');
@@ -66,26 +83,36 @@ export function AddUserModal({ isOpen, onClose }: AddUserModalProps) {
   const [region, setRegion] = useState('');
   const [casesHandled, setCasesHandled] = useState('');
 
-  const handleAddMember = () => {
-    if (!fullName || !role) return;
+  useEffect(() => {
+    if (user && isOpen) {
+      setFullName(user.name);
+      setEmail(user.email);
+      setRole(user.role);
+      setRegion(user.region);
+      setCasesHandled(user.casesHandled.toString());
+      setStatus(user.status);
+    }
+  }, [user, isOpen]);
 
-    const roleColors: any = {
+  const handleUpdateMember = () => {
+    if (!fullName || !role || !user) return;
+
+    const roleColors: Record<string, { color: string, bg: string, border: string }> = {
       'Case Officer': { color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-200' },
       'Senior Investigator': { color: 'text-yellow-700', bg: 'bg-yellow-50', border: 'border-yellow-200' },
       'Finance Officer': { color: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-200' },
       'Audit Officer': { color: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-200' },
       'HR Officer': { color: 'text-teal-600', bg: 'bg-teal-50', border: 'border-teal-200' },
-      'Administrator': { color: 'text-gray-900', bg: 'bg-gray-100', border: 'border-gray-300' }
+      'Administrator': { color: 'text-gray-900', bg: 'bg-gray-100', border: 'border-gray-300' },
+      'IT Support': { color: 'text-gray-600', bg: 'bg-gray-50', border: 'border-gray-200' },
+      'Legal Advisor': { color: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-200' }
     };
     const rStyle = roleColors[role] || roleColors['Case Officer'];
 
-    const newUser = {
-      id: Math.random().toString(36).substr(2, 9),
+    const updatedUser = {
+      ...user,
       name: fullName,
       email: email || '',
-      initials: fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) || 'U',
-      initialsBg: 'bg-[#d1fae5]',
-      initialsColor: 'text-[#065f46]',
       role: role,
       roleColor: rStyle.color,
       roleBg: rStyle.bg,
@@ -95,14 +122,7 @@ export function AddUserModal({ isOpen, onClose }: AddUserModalProps) {
       status: status
     };
 
-    window.dispatchEvent(new CustomEvent('addUser', { detail: newUser }));
-
-    setFullName('');
-    setEmail('');
-    setRole('');
-    setRegion('');
-    setCasesHandled('');
-    setStatus('Active');
+    window.dispatchEvent(new CustomEvent('updateUser', { detail: updatedUser }));
     onClose();
   };
 
@@ -113,7 +133,7 @@ export function AddUserModal({ isOpen, onClose }: AddUserModalProps) {
       <div className="bg-white rounded-xl shadow-xl w-full max-w-3xl overflow-visible flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
-          <h2 className="text-xl font-bold text-gray-900">Add Team Members</h2>
+          <h2 className="text-xl font-bold text-gray-900">Edit Team Member</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-red-500 transition-all duration-300 p-1.5 rounded-full hover:bg-red-50 hover:rotate-90 hover:scale-110">
             <X size={20} />
           </button>
@@ -151,7 +171,7 @@ export function AddUserModal({ isOpen, onClose }: AddUserModalProps) {
             <div className="flex flex-col gap-2">
               <label className="text-sm font-bold text-gray-900">Role <span className="text-red-500">*</span></label>
               <AnimatedSelect
-                options={["Case Officer", "Senior Investigator", "Finance Officer", "Audit Officer", "HR Officer", "Administrator"]}
+                options={["Case Officer", "Senior Investigator", "Finance Officer", "Audit Officer", "HR Officer", "Administrator", "IT Support", "Legal Advisor"]}
                 value={role}
                 onChange={setRole}
                 placeholder="Select Role"
@@ -211,9 +231,9 @@ export function AddUserModal({ isOpen, onClose }: AddUserModalProps) {
           <button onClick={onClose} className="px-8 py-2.5 border border-[#1e293b] text-[#1e293b] rounded-lg text-sm font-bold hover:bg-gray-50 transition-colors">
             Cancel
           </button>
-          <button onClick={handleAddMember} className="px-6 py-2.5 bg-[#16A34A] hover:bg-[#15803d] text-white rounded-lg text-sm font-bold flex items-center gap-2 transition-colors">
+          <button onClick={handleUpdateMember} className="px-6 py-2.5 bg-[#16A34A] hover:bg-[#15803d] text-white rounded-lg text-sm font-bold flex items-center gap-2 transition-colors">
             <Save size={18} />
-            Add Member
+            Update Role
           </button>
         </div>
       </div>

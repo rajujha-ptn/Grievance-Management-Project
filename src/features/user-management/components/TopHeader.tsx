@@ -17,12 +17,12 @@ export function TopHeader() {
           </p>
         </div>
 
-        <button 
+        <button
           onClick={() => setIsModalOpen(true)}
           className="flex items-center gap-2 bg-[#16a34a] hover:bg-[#10883c] text-white px-4 py-2.5 rounded-lg text-sm font-bold transition-colors"
         >
           <Plus size={18} />
-          Add User
+          Add Team Members
         </button>
       </div>
 

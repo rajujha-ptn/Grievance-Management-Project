@@ -1,7 +1,60 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Pencil, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Pencil, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ChevronDown } from 'lucide-react';
+import { EditRoleModal } from './EditRoleModal';
+
+const AnimatedPaginationSelect = ({ value, onChange, options }: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <div 
+        onClick={() => setIsOpen(!isOpen)}
+        className={`border rounded-md px-3 py-1 text-sm bg-white transition-all duration-200 cursor-pointer flex justify-between items-center min-w-[64px] ${
+          isOpen ? 'border-[#16A34A] ring-1 ring-[#16A34A]' : 'border-gray-200 hover:border-gray-300'
+        }`}
+      >
+        <span className="text-gray-700 font-medium">{value}</span>
+        <ChevronDown size={14} className={`text-gray-500 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+      </div>
+      
+      {isOpen && (
+        <div className="absolute z-50 bottom-full mb-1 w-full left-0 bg-white border border-gray-100 rounded-md shadow-lg overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-200 origin-bottom">
+          <ul className="max-h-40 overflow-auto py-1">
+            {options.map((opt: number) => (
+              <li
+                key={opt}
+                onClick={() => {
+                  onChange(opt);
+                  setIsOpen(false);
+                }}
+                className={`px-3 py-1.5 text-sm cursor-pointer transition-colors text-center ${
+                  value === opt 
+                    ? 'bg-[#16A34A]/10 text-[#16A34A] font-medium' 
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                {opt}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
 
 type UserStatus = 'Active' | 'Inactive';
 
@@ -51,13 +104,22 @@ const users: User[] = [
 
 export function UserTable() {
   const [userList, setUserList] = useState<User[]>(users);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   
   useEffect(() => {
     const handleAddUser = (e: any) => {
       setUserList(prev => [e.detail, ...prev]);
     };
+    const handleUpdateUser = (e: any) => {
+      setUserList(prev => prev.map(user => user.id === e.detail.id ? e.detail : user));
+    };
     window.addEventListener('addUser', handleAddUser);
-    return () => window.removeEventListener('addUser', handleAddUser);
+    window.addEventListener('updateUser', handleUpdateUser);
+    return () => {
+      window.removeEventListener('addUser', handleAddUser);
+      window.removeEventListener('updateUser', handleUpdateUser);
+    };
   }, []);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -137,7 +199,13 @@ export function UserTable() {
                 </td>
                 <td className="px-5 py-4 text-right">
                   <div className="flex justify-end gap-2">
-                    <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-md hover:bg-gray-50 transition-colors">
+                    <button 
+                      onClick={() => {
+                        setEditingUser(user);
+                        setIsEditModalOpen(true);
+                      }}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
+                    >
                       <Pencil size={12} />
                       Edit Role
                     </button>
@@ -169,18 +237,14 @@ export function UserTable() {
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <span>Rows per page:</span>
-            <select
+            <AnimatedPaginationSelect
               value={rowsPerPage}
-              onChange={(e) => {
-                setRowsPerPage(Number(e.target.value));
+              onChange={(val: number) => {
+                setRowsPerPage(val);
                 setCurrentPage(1);
               }}
-              className="border border-gray-200 rounded-md px-2 py-1 bg-white focus:outline-none focus:border-[#16A34A] hover:border-gray-300 transition-colors cursor-pointer text-gray-700"
-            >
-              <option value={10}>10</option>
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-            </select>
+              options={[10, 25, 50]}
+            />
           </div>
           <span>
             Showing <span className="font-semibold text-gray-900">{userList.length === 0 ? 0 : startIndex + 1}-{endIndex}</span> of <span className="font-semibold text-gray-900">{userList.length}</span> results
@@ -232,6 +296,15 @@ export function UserTable() {
           </button>
         </div>
       </div>
+
+      <EditRoleModal 
+        isOpen={isEditModalOpen} 
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setEditingUser(null);
+        }} 
+        user={editingUser} 
+      />
     </div>
   );
 }
