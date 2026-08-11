@@ -95,7 +95,7 @@ export function SeniorNodalOfficersL2() {
   );
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 font-sans">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 font-sans h-[calc(100vh-230px)] overflow-y-auto">
 
       {/* Top Search & Actions */}
       <div className="flex flex-col md:flex-row justify-between items-center pb-4 mb-6 px-6 -mx-4 gap-4 border-b border-gray-200">
