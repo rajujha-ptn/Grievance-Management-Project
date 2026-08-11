@@ -7,12 +7,13 @@ import { NodalOfficersL1 } from './tabs-pages/nodal-officers/page';
 import { SeniorNodalOfficersL2 } from './tabs-pages/senior-nodal-officers/page';
 import CategoryAssignmentsPage from './tabs-pages/category-assignments/page';
 import SlaConfigurationPage from './tabs-pages/sla-configuration/page';
+import NotificationConfigPage from './tabs-pages/notification-config/page';
 
 export default function AdministrationPage() {
     const [activeTab, setActiveTab] = useState('Nodal Officers (L1)');
 
     return (
-        <div className="flex flex-col gap-6 font-sans pb-0">
+        <div className="flex flex-col gap-6 font-sans pb-0 ">
 
             {/* Header */}
             <TopHeader />
@@ -27,6 +28,8 @@ export default function AdministrationPage() {
                 <CategoryAssignmentsPage />
             ) : activeTab === 'SLA Configuration' ? (
                 <SlaConfigurationPage />
+            ) : activeTab === 'Notification Config' ? (
+                <NotificationConfigPage />
             ) : (
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center text-gray-500 font-medium">
                     Content for {activeTab} is under construction.

@@ -52,15 +52,16 @@ export default function AllGrievancesPage() {
       
       // 3. Date match
       let matchesDate = true;
-      if (advancedFilters.fromDate || advancedFilters.toDate) {
+      const filters = advancedFilters as any;
+      if (filters.fromDate || filters.toDate) {
         const itemDate = new Date(g.submittedAt);
-        if (advancedFilters.fromDate) {
-          const from = new Date(advancedFilters.fromDate);
+        if (filters.fromDate) {
+          const from = new Date(filters.fromDate);
           from.setHours(0, 0, 0, 0);
           if (itemDate < from) matchesDate = false;
         }
-        if (advancedFilters.toDate) {
-          const to = new Date(advancedFilters.toDate);
+        if (filters.toDate) {
+          const to = new Date(filters.toDate);
           to.setHours(23, 59, 59, 999);
           if (itemDate > to) matchesDate = false;
         }
