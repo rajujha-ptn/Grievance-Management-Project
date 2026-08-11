@@ -1,6 +1,6 @@
 import React from 'react';
 import { User, Tag, Info, MapPin, Building, Calendar } from 'lucide-react';
-import { Grievance } from '../mockData';
+import { Grievance } from '../../mockData';
 
 interface SubmitterDetailsProps {
   grievance: Grievance;

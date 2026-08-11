@@ -6,6 +6,7 @@ import { AdministrationTabs } from './components/AdministrationTabs';
 import { NodalOfficersL1 } from './tabs-pages/nodal-officers/page';
 import { SeniorNodalOfficersL2 } from './tabs-pages/senior-nodal-officers/page';
 import CategoryAssignmentsPage from './tabs-pages/category-assignments/page';
+import SlaConfigurationPage from './tabs-pages/sla-configuration/page';
 
 export default function AdministrationPage() {
     const [activeTab, setActiveTab] = useState('Nodal Officers (L1)');
@@ -24,6 +25,8 @@ export default function AdministrationPage() {
                 <SeniorNodalOfficersL2 />
             ) : activeTab === 'Category Assignments' ? (
                 <CategoryAssignmentsPage />
+            ) : activeTab === 'SLA Configuration' ? (
+                <SlaConfigurationPage />
             ) : (
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center text-gray-500 font-medium">
                     Content for {activeTab} is under construction.
