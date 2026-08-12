@@ -7,7 +7,7 @@ import { MOCK_CORE_NOTIFICATIONS, MOCK_ESCALATION_NOTIFICATIONS } from './compon
 
 export default function NotificationConfigPage() {
     return (
-        <div className="w-full flex flex-col h-[calc(100vh-230px)] overflow-y-auto pb-6 [scrollbar-color:#16A34A_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#16A34A] [&::-webkit-scrollbar-thumb]:rounded-full pr-2 bg-white p-6 rounded-lg border border-[#F1F3F4] ">
+        <div className="w-full flex flex-col h-[calc(100vh-230px)] overflow-y-auto pb-6 [scrollbar-color:#16A34A_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#16A34A] [&::-webkit-scrollbar-thumb]:rounded-full pr-2 bg-white p-6 rounded-lg border border-[#F1F3F4] p-6 pb-0 mb-6 bg-white border border-gray-200 rounded-xl">
 
             {/* Info Banner */}
             <div className="flex items-center gap-2 bg-[#F0F7FF] border border-[#D6E8FF] rounded-lg p-3 mb-6">
