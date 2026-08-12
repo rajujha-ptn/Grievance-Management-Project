@@ -54,7 +54,7 @@ export function EditSeniorOfficerModal({ isOpen, onClose, officer }: EditSeniorO
         <div key={officer.id} className="bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col font-sans">
 
           {/* Header */}
-          <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+          <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200">
             <h2 className="text-xl font-bold text-gray-900">Edit L2 Officer</h2>
             <button
               onClick={onClose}
@@ -198,10 +198,10 @@ export function EditSeniorOfficerModal({ isOpen, onClose, officer }: EditSeniorO
           </div>
 
           {/* Footer */}
-          <div className="flex justify-end items-center gap-4 px-6 py-4 border-t border-gray-100">
+          <div className="flex justify-end items-center gap-4 px-6 py-4 border-t border-gray-200">
             <button
               onClick={onClose}
-              className="px-6 py-2.5 bg-white border border-[#1f2937] text-[#1f2937] rounded-lg text-sm font-bold hover:bg-gray-50 transition-colors shadow-sm"
+              className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
               Cancel
             </button>

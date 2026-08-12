@@ -95,10 +95,10 @@ export function SeniorNodalOfficersL2() {
   );
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 font-sans h-[calc(100vh-230px)] overflow-y-auto">
+    <div className="w-full flex flex-col h-[calc(100vh-230px)] bg-white rounded-xl shadow-sm border border-gray-100 font-sans overflow-hidden">
 
-      {/* Top Search & Actions */}
-      <div className="flex flex-col md:flex-row justify-between items-center pb-4 mb-6 px-6 -mx-4 gap-4 border-b border-gray-200">
+      {/* Top Search & Actions (Fixed) */}
+      <div className="flex flex-col md:flex-row justify-between items-center p-6 border-b border-gray-200 shrink-0">
         <div className="relative w-full max-w-md">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search size={16} className="text-gray-400" />
@@ -127,23 +127,28 @@ export function SeniorNodalOfficersL2() {
         </div>
       </div>
 
-      {/* Escalation Flow Info */}
-      <div className="mb-6 bg-[#FFFBEB] border border-[#F7ECBB] rounded-xl px-5 py-3 flex items-center gap-3">
-        <Zap size={18} className="text-[#D97706] fill-transparent" />
-        <span className="text-[14px] font-semibold text-[#B45309]">
-          Escalation flow: <span className="font-medium text-[#D97706]">Submitted → L1 Officer → SLA breach → L1 escalation → 2× SLA → L2 escalation → Admin notified.</span>
-        </span>
-      </div>
+      {/* Scrollable Area */}
+      <div className="flex-1 overflow-y-auto [scrollbar-color:#16A34A_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#16A34A] [&::-webkit-scrollbar-thumb]:rounded-full">
+        <div className="p-6">
+          {/* Escalation Flow Info */}
+          <div className="mb-6 bg-[#FFFBEB] border border-[#F7ECBB] rounded-xl px-5 py-3 flex items-center gap-3">
+            <Zap size={18} className="text-[#D97706] fill-transparent" />
+            <span className="text-[14px] font-semibold text-[#B45309]">
+              Escalation flow: <span className="font-medium text-[#D97706]">Submitted → L1 Officer → SLA breach → L1 escalation → 2× SLA → L2 escalation → Admin notified.</span>
+            </span>
+          </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-0">
-        {filteredOfficers.map(officer => (
-          <SeniorOfficerCard
-            key={officer.id}
-            officer={officer}
-            onEdit={(o) => setEditingOfficer(o)}
-          />
-        ))}
+          {/* Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-0">
+            {filteredOfficers.map(officer => (
+              <SeniorOfficerCard
+                key={officer.id}
+                officer={officer}
+                onEdit={(o) => setEditingOfficer(o)}
+              />
+            ))}
+          </div>
+        </div>
       </div>
 
       <AddSeniorOfficerModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} />

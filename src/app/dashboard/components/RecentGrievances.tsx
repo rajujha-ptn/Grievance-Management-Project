@@ -8,7 +8,7 @@ export function RecentGrievances({ data }: { data: any[] }) {
       </div>
 
       {/* Scrollable container for data items */}
-      <div className="flex-1 overflow-y-auto max-h-[380px] px-6 py-4 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-green-500 [&::-webkit-scrollbar-thumb]:rounded-full">
+      <div className="flex-1 overflow-y-auto max-h-[380px] px-6 py-4 [scrollbar-color:#16A34A_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#16A34A]:rounded-full">
         <div className="space-y-4 pr-2">
           {data.map((g, i) => (
             <div key={i} className={`pb-4 ${i !== data.length - 1 ? 'border-b border-gray-100' : ''}`}>

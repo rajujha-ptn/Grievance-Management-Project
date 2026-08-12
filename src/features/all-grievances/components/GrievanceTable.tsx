@@ -96,7 +96,7 @@ export function GrievanceTable({
       </div>
 
       {/* Table */}
-      <div className="overflow-auto flex-1 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#1E8E3E] [&::-webkit-scrollbar-thumb]:rounded-full">
+      <div className="overflow-auto flex-1 [scrollbar-color:#16A34A_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#16A34A] [&::-webkit-scrollbar-thumb]:rounded-full">
         <table className="w-full text-sm text-left">
           <thead className="text-sm text-slate-500 bg-[#F8F9FA] border-b border-gray-200 font-semibold">
             <tr>
@@ -177,7 +177,7 @@ export function GrievanceTable({
                     {grievance.submittedAt}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <button 
+                    <button
                       onClick={() => onViewGrievance(grievance)}
                       className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#E6F3EA] border border-[#C9E5D2] text-green-600 hover:bg-[#C8E6C9] rounded-full text-sm font-bold transition-colors opacity-90 group-hover:opacity-100"
                     >

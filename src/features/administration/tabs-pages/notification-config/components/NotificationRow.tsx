@@ -37,7 +37,7 @@ export function NotificationRow({ notification, isLast }: NotificationRowProps) 
     const allRecipients = ['Submitter', 'L1 Officer', 'L2 Officer', 'Dept Head', 'Nodal Officer', 'Top-level Authority'];
 
     return (
-        <div className={`bg-gray-50 border border-gray-200 rounded-xl mb-4 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05),0px_2px_4px_-1px_rgba(0,0,0,0.03)] hover:-translate-y-1 hover:shadow-lg transition-all duration-300 overflow-hidden ${!isLast ? 'mb-4' : ''}`}>
+        <div className={`bg-white border border-gray-200 rounded-xl shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05),0px_2px_4px_-1px_rgba(0,0,0,0.03)] hover:-translate-y-1 hover:shadow-lg transition-all duration-300 overflow-hidden ${isLast ? 'mb-0' : 'mb-4'} last:mb-0`}>
             <div className="bg-white p-6 flex items-center justify-between">
                 <div className="flex-1">
                     {/* Header Row */}

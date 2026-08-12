@@ -24,7 +24,7 @@ export default function ResponseTemplatesPage() {
                 <div className="flex items-center gap-4">
                     <CategoryDropdown />
 
-                    <button className="mt-5 px-4 py-2.5 bg-[#16A34A] text-white rounded-lg text-[16px] font-bold hover:bg-[#15803d] transition-colors">
+                    <button className="mt-5 px-4 py-2.5 bg-[#16A34A] text-white rounded-lg text-sm font-bold hover:bg-[#15803d] transition-colors">
                         + Add Template
                     </button>
                 </div>

@@ -3,29 +3,31 @@
 import { Bell, Globe, Search, Menu, ChevronDown } from "lucide-react";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { usePathname } from "next/navigation";
+import { UserProfile } from "./UserProfile";
 
 export function Header() {
   const { toggleSidebar } = useSidebar();
   const pathname = usePathname();
 
-  const routeTitles: Record<string, string> = {
-    "/": "Dashboard",
-    "/all-grievances": "All Grievances",
-    "/grievances/submit": "Submit Grievance",
-    "/analytics": "Analytics & Reporting",
-    "/users": "User Management",
-    "/admin": "Administration",
-    "/settings": "Settings",
+  const getPageTitle = (path: string) => {
+    if (path === "/") return "Dashboard";
+    if (path.startsWith("/administration")) return "Administration";
+    if (path.startsWith("/all-grievances")) return "All Grievances";
+    if (path.startsWith("/grievances/submit")) return "Submit Grievance";
+    if (path.startsWith("/analytics-reporting")) return "Analytics & Reporting";
+    if (path.startsWith("/user-management")) return "User Management";
+    if (path.startsWith("/settings")) return "Settings";
+    return "Dashboard";
   };
 
-  const title = routeTitles[pathname] || "Dashboard";
+  const title = getPageTitle(pathname);
 
   return (
     <header className="h-16 bg-white shadow-md flex items-center justify-between px-6 sticky top-0 z-10 w-full">
-      
+
       {/* Left Section: Menu + Title */}
       <div className="flex items-center gap-4">
-        <button 
+        <button
           onClick={toggleSidebar}
           className="text-slate-800 hover:text-white hover:bg-[#0b5c36] focus:outline-none transition-all duration-300 p-1.5 -ml-1.5 rounded-lg"
         >
@@ -36,7 +38,7 @@ export function Header() {
 
       {/* Right Section */}
       <div className="flex items-center gap-5">
-        
+
         {/* Search Bar */}
         <div className="relative hidden md:block w-80 lg:w-[400px]">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -63,14 +65,9 @@ export function Header() {
           <Globe className="w-[18px] h-[18px] text-slate-500 stroke-[2]" />
           English
         </button>
-        
+
         {/* User Profile */}
-        <button className="flex items-center gap-2 focus:outline-none hover:opacity-80 transition-opacity ml-2">
-          <div className="flex items-center justify-center h-8 w-8 rounded-full bg-[#f59e0b] text-white font-bold text-[13px] tracking-wide">
-            AT
-          </div>
-          <ChevronDown className="w-4 h-4 text-slate-700 stroke-[2.5]" />
-        </button>
+        <UserProfile />
 
       </div>
     </header>

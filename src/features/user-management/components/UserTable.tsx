@@ -20,16 +20,15 @@ const AnimatedPaginationSelect = ({ value, onChange, options }: any) => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <div 
+      <div
         onClick={() => setIsOpen(!isOpen)}
-        className={`border rounded-md px-3 py-1 text-sm bg-white transition-all duration-200 cursor-pointer flex justify-between items-center min-w-[64px] ${
-          isOpen ? 'border-[#16A34A] ring-1 ring-[#16A34A]' : 'border-gray-200 hover:border-gray-300'
-        }`}
+        className={`border rounded-md px-3 py-1 text-sm bg-white transition-all duration-200 cursor-pointer flex justify-between items-center min-w-[64px] ${isOpen ? 'border-[#16A34A] ring-1 ring-[#16A34A]' : 'border-gray-200 hover:border-gray-300'
+          }`}
       >
         <span className="text-gray-700 font-medium">{value}</span>
         <ChevronDown size={14} className={`text-gray-500 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </div>
-      
+
       {isOpen && (
         <div className="absolute z-50 bottom-full mb-1 w-full left-0 bg-white border border-gray-100 rounded-md shadow-lg overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-200 origin-bottom">
           <ul className="max-h-40 overflow-auto py-1">
@@ -40,11 +39,10 @@ const AnimatedPaginationSelect = ({ value, onChange, options }: any) => {
                   onChange(opt);
                   setIsOpen(false);
                 }}
-                className={`px-3 py-1.5 text-sm cursor-pointer transition-colors text-center ${
-                  value === opt 
-                    ? 'bg-[#16A34A]/10 text-[#16A34A] font-medium' 
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
+                className={`px-3 py-1.5 text-sm cursor-pointer transition-colors text-center ${value === opt
+                  ? 'bg-[#16A34A]/10 text-[#16A34A] font-medium'
+                  : 'text-gray-700 hover:bg-gray-50'
+                  }`}
               >
                 {opt}
               </li>
@@ -106,7 +104,7 @@ export function UserTable() {
   const [userList, setUserList] = useState<User[]>(users);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  
+
   useEffect(() => {
     const handleAddUser = (e: any) => {
       setUserList(prev => [e.detail, ...prev]);
@@ -145,14 +143,14 @@ export function UserTable() {
 
   return (
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
-      <div className="p-5 border-b border-gray-100">
+      <div className="p-5 border-b border-gray-200">
         <h2 className="text-lg font-bold text-gray-900">Team Members</h2>
       </div>
 
-      <div className="overflow-x-auto overflow-y-auto h-[620px] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#16A34A] [&::-webkit-scrollbar-thumb]:rounded-full">
+      <div className="overflow-x-auto overflow-y-auto h-[620px] [scrollbar-color:#16A34A_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#16A34A] [&::-webkit-scrollbar-thumb]:rounded-full">
         <table className="w-full text-left border-collapse min-w-max">
           <thead>
-            <tr className="border-b border-gray-100 bg-gray-50/50">
+            <tr className="border-b border-gray-200 bg-gray-50/50">
               <th className="px-5 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">User Name</th>
               <th className="px-5 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Role</th>
               <th className="px-5 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Region</th>
@@ -199,7 +197,7 @@ export function UserTable() {
                 </td>
                 <td className="px-5 py-4 text-right">
                   <div className="flex justify-end gap-2">
-                    <button 
+                    <button
                       onClick={() => {
                         setEditingUser(user);
                         setIsEditModalOpen(true);
@@ -233,7 +231,7 @@ export function UserTable() {
       </div>
 
       {/* Pagination Footer */}
-      <div className="px-5 py-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+      <div className="px-5 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <span>Rows per page:</span>
@@ -297,13 +295,13 @@ export function UserTable() {
         </div>
       </div>
 
-      <EditRoleModal 
-        isOpen={isEditModalOpen} 
+      <EditRoleModal
+        isOpen={isEditModalOpen}
         onClose={() => {
           setIsEditModalOpen(false);
           setEditingUser(null);
-        }} 
-        user={editingUser} 
+        }}
+        user={editingUser}
       />
     </div>
   );

@@ -17,9 +17,9 @@ const navItems = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
   { name: "All Grievances", href: "/all-grievances", icon: FileText },
   { name: "Submit Grievance", href: "/grievances/submit", icon: PlusCircle },
-  { name: "Analytics & Reporting", href: "/analytics", icon: BarChart3 },
-  { name: "User Management", href: "/users", icon: Users },
-  { name: "Administration", href: "/admin", icon: ShieldCheck },
+  { name: "Analytics & Reporting", href: "/analytics-reporting", icon: BarChart3 },
+  { name: "User Management", href: "/user-management", icon: Users },
+  { name: "Administration", href: "/administration", icon: ShieldCheck },
   { name: "Settings", href: "/settings", icon: Settings },
 ];
 
@@ -48,7 +48,7 @@ export function Sidebar() {
       </div>
 
       {/* Navigation Section */}
-      <nav className="flex-1 py-6">
+      <nav className="flex-1 py-3">
         <ul className="space-y-2 px-4">
           {navItems.map((item) => {
             const Icon = item.icon;

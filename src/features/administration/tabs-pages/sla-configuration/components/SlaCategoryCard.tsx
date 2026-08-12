@@ -19,7 +19,7 @@ export function SlaCategoryCard({ categoryData, isLast = false }: SlaCategoryCar
     const urgentDays = Math.round(slaDays * 0.8);
 
     return (
-        <div className="bg-white border border-gray-200 mb-4 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05),0px_2px_4px_-1px_rgba(0,0,0,0.03)] hover:-translate-y-1 hover:shadow-lg transition-all duration-300 rounded-xl">
+        <div className={`bg-white border border-gray-200 ${isLast ? 'mb-0' : 'mb-4'} last:mb-0 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05),0px_2px_4px_-1px_rgba(0,0,0,0.03)] hover:-translate-y-1 hover:shadow-lg transition-all duration-300 rounded-xl`}>
             {/* Header (always visible) */}
             <div
                 className="flex items-center justify-between p-4 cursor-pointer transition-colors"
