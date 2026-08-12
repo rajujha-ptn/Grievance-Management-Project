@@ -8,6 +8,7 @@ import { SeniorNodalOfficersL2 } from './tabs-pages/senior-nodal-officers/page';
 import CategoryAssignmentsPage from './tabs-pages/category-assignments/page';
 import SlaConfigurationPage from './tabs-pages/sla-configuration/page';
 import NotificationConfigPage from './tabs-pages/notification-config/page';
+import ResponseTemplatesPage from './tabs-pages/response-templates/page';
 
 export default function AdministrationPage() {
     const [activeTab, setActiveTab] = useState('Nodal Officers (L1)');
@@ -30,6 +31,8 @@ export default function AdministrationPage() {
                 <SlaConfigurationPage />
             ) : activeTab === 'Notification Config' ? (
                 <NotificationConfigPage />
+            ) : activeTab === 'Response Templates' ? (
+                <ResponseTemplatesPage />
             ) : (
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center text-gray-500 font-medium">
                     Content for {activeTab} is under construction.
