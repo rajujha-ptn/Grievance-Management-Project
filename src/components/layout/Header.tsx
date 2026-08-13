@@ -13,7 +13,7 @@ export function Header() {
     if (path === "/") return "Dashboard";
     if (path.startsWith("/administration")) return "Administration";
     if (path.startsWith("/all-grievances")) return "All Grievances";
-    if (path.startsWith("/grievances/submit")) return "Submit Grievance";
+    if (path.startsWith("/submit-grievance")) return "Submit Grievance";
     if (path.startsWith("/analytics-reporting")) return "Analytics & Reporting";
     if (path.startsWith("/user-management")) return "User Management";
     if (path.startsWith("/settings")) return "Settings";

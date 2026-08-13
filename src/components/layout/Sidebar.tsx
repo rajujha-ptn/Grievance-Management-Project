@@ -16,7 +16,7 @@ import {
 const navItems = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
   { name: "All Grievances", href: "/all-grievances", icon: FileText },
-  { name: "Submit Grievance", href: "/grievances/submit", icon: PlusCircle },
+  { name: "Submit Grievance", href: "/submit-grievance", icon: PlusCircle },
   { name: "Analytics & Reporting", href: "/analytics-reporting", icon: BarChart3 },
   { name: "User Management", href: "/user-management", icon: Users },
   { name: "Administration", href: "/administration", icon: ShieldCheck },
