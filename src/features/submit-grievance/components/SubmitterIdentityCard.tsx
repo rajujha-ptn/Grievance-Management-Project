@@ -24,7 +24,11 @@ const submissionChannelOptions = [
   { value: "field_officer", label: "Field Officer Assisted" },
 ];
 
-export function SubmitterIdentityCard() {
+interface SubmitterIdentityCardProps {
+  onNext?: () => void;
+}
+
+export function SubmitterIdentityCard({ onNext }: SubmitterIdentityCardProps) {
   const [submitterType, setSubmitterType] = useState("");
   const [submissionChannel, setSubmissionChannel] = useState("");
   return (
@@ -94,7 +98,10 @@ export function SubmitterIdentityCard() {
             <Save className="w-4 h-4 text-[#0b8535]" />
             Save Draft
           </button>
-          <button className="flex items-center gap-2 px-5 py-3 bg-[#16A34A] text-white rounded-lg text-sm font-bold hover:bg-[#10883c] transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0b8535]/50">
+          <button 
+            onClick={onNext}
+            className="flex items-center gap-2 px-5 py-3 bg-[#16A34A] text-white rounded-lg text-sm font-bold hover:bg-[#10883c] transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0b8535]/50"
+          >
             Save & Continue
             <ArrowRight className="w-4 h-4" />
           </button>
