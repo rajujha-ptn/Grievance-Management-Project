@@ -1,4 +1,5 @@
 import { AlertTriangle, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export function TopHeader() {
   return (
@@ -21,9 +22,9 @@ export function TopHeader() {
             <span className="font-semibold text-[#b45309]">1 escalated grievance</span> require immediate senior officer attention.
           </span>
         </div>
-        <button className="flex items-center gap-1.5 font-bold text-[#d97706] hover:text-[#b45309] transition-colors">
+        <Link href="/all-grievances" className="flex items-center gap-1.5 font-bold text-[#d97706] hover:text-[#b45309] transition-colors">
           View all <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-        </button>
+        </Link>
       </div>
     </div>
   );

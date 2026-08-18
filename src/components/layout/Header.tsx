@@ -1,9 +1,10 @@
 "use client";
 
-import { Bell, Globe, Search, Menu, ChevronDown } from "lucide-react";
+import { Bell, Search, Menu } from "lucide-react";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { usePathname } from "next/navigation";
 import { UserProfile } from "./UserProfile";
+import { LanguageSelector } from "./LanguageSelector";
 
 export function Header() {
   const { toggleSidebar } = useSidebar();
@@ -61,10 +62,7 @@ export function Header() {
         <div className="h-7 w-[1px] bg-gray-200 mx-1"></div>
 
         {/* Language Selector */}
-        <button className="flex items-center gap-1.5 text-[15px] font-medium text-slate-600 hover:text-slate-900 focus:outline-none transition-colors">
-          <Globe className="w-[18px] h-[18px] text-slate-500 stroke-[2]" />
-          English
-        </button>
+        <LanguageSelector />
 
         {/* User Profile */}
         <UserProfile />
